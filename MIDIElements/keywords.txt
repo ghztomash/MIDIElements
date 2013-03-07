@@ -1,0 +1,10 @@
+Button	KEYWORD1
+Potentiometer	KEYWORD1
+Led	KEYWORD1
+read	KEYWORD2
+readValue	KEYWORD2
+setVelocity	KEYWORD2
+noteOnOff	KEYWORD2
+set	KEYWORD2
+setOn	KEYWORD2
+setOff	KEYWORD2
