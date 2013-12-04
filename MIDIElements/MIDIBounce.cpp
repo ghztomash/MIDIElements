@@ -1,11 +1,11 @@
 
-// Please read Bounce.h for information about the liscence and authors
+// Please read MIDIBounce.h for information about the liscence and authors
 
 #include "WProgram.h"
-#include "Bounce.h"
+#include "MIDIBounce.h"
 
 
-Bounce::Bounce(uint8_t pin,unsigned long interval_millis)
+MIDIBounce::MIDIBounce(uint8_t pin,unsigned long interval_millis)
 {
 	interval(interval_millis);
 	previous_millis = millis();
@@ -14,27 +14,27 @@ Bounce::Bounce(uint8_t pin,unsigned long interval_millis)
 }
 
 
-void Bounce::write(int new_state)
+void MIDIBounce::write(int new_state)
        {
        	this->state = new_state;
        	digitalWrite(pin,state);
        }
 
 
-void Bounce::interval(unsigned long interval_millis)
+void MIDIBounce::interval(unsigned long interval_millis)
 {
   this->interval_millis = interval_millis;
   this->rebounce_millis = 0;
 }
 
-void Bounce::rebounce(unsigned long interval)
+void MIDIBounce::rebounce(unsigned long interval)
 {
 	 this->rebounce_millis = interval;
 }
 
 
 
-int Bounce::update()
+int MIDIBounce::update()
 {
 	if ( debounce() ) {
         rebounce(0);
@@ -53,20 +53,20 @@ int Bounce::update()
 }
 
 
-unsigned long Bounce::duration()
+unsigned long MIDIBounce::duration()
 {
   return millis() - previous_millis;
 }
 
 
-int Bounce::read()
+int MIDIBounce::read()
 {
 	return (int)state;
 }
 
 
 // Protected: debounces the pin
-int Bounce::debounce() {
+int MIDIBounce::debounce() {
 	
 	uint8_t newState = digitalRead(pin);
 	if (state != newState ) {
@@ -82,7 +82,7 @@ int Bounce::debounce() {
 }
 
 // The risingEdge method is true for one scan after the de-bounced input goes from off-to-on.
-bool  Bounce::risingEdge() { return stateChanged && state; }
+bool  MIDIBounce::risingEdge() { return stateChanged && state; }
 // The fallingEdge  method it true for one scan after the de-bounced input goes from on-to-off. 
-bool  Bounce::fallingEdge() { return stateChanged && !state; }
+bool  MIDIBounce::fallingEdge() { return stateChanged && !state; }
 

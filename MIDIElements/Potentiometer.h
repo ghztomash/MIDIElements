@@ -16,6 +16,7 @@ private:
 	bool secondary; // send secondary midi signal
 	int lastValue;
 	int tempRead;
+	int readValues[3];
 	byte pin; // pin on teensy
 	byte channel; // midi channel
 	byte number; // midi number
@@ -27,7 +28,9 @@ public:
 	Potentiometer(byte p, byte c, byte n, bool sec, bool debug);
 	~Potentiometer(); // destructor
 	void read(); // read the values
+	void readAvr(); // read the smoothened values
 	int readValue(bool &changed); // read the values and return if the button is high, and pass statechange
+	void changeSecondary(bool s);
 };
 //-----------------------------------------------------------------------------------
 

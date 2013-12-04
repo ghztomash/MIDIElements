@@ -11,6 +11,7 @@
 #include "Button.h"
 #include "Potentiometer.h"
 #include "Led.h"
+#include "RGLed.h"
 //-----------------------------------------------------------------------------------
 
 #endif

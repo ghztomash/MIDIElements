@@ -30,7 +30,7 @@ Button::Button(byte p, byte c, byte n, bool sec, bool debug){ // pin, number, ch
 	
 	pinMode(pin, INPUT_PULLUP); // enable the pin for input
 		
-	bButn = new Bounce(pin, 10); // create new bounce object for pin
+	bButn = new MIDIBounce(pin, 10); // create new bounce object for pin
 }
 
 // destructor

@@ -4,29 +4,30 @@
 // www.tomashg.com
 // ghz.tomash@gmail.com
 
-#ifndef Led_H
-#define Led_H
+#ifndef RGLed_H
+#define RGLed_H
 
 //-----------------------------------------------------------------------------------
 #include "WProgram.h" //It is very important to remember this! note that if you are using Arduino 1.0 IDE, change "WProgram.h" to "Arduino.h"
 
-class Led {
+class RGLed {
 private:
-	byte pin; // pin on teensy
+	byte pinA; // pin on teensy
+	byte pinB; // pin on teensy for second color
 	byte channel; // midi channel
 	byte number; // midi number
 	bool pwm;
-	bool state;
+	byte state;
 public:
-	Led(byte p); // constructors
-	Led(byte p, byte c, byte n);
-	Led(byte p, byte c, byte n, bool a);
-	~Led(); // destructor
+	RGLed(byte pa, byte pb); // constructors
+	RGLed(byte pa, byte pb, byte c, byte n);
+	RGLed(byte pa, byte pb, byte c, byte n, bool a);
+	~RGLed(); // destructor
 	void setOn(byte c, byte n, byte v); // read the values for note on and cc
 	void setOff(byte c, byte n, byte v); // read the values for note off
 	void setOnSilent(byte c, byte n, byte v); // read the values for note on and cc
 	void setOffSilent(byte c, byte n, byte v); // read the values for note off
-	void set(bool s); // set led to state
+	void set(byte s); // set led to state
 	void set();
 };
 //-----------------------------------------------------------------------------------

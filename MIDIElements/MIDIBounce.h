@@ -25,17 +25,17 @@
  risingEdge and fallingEdge contributed by Tom Harkaway
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-#ifndef Bounce_h
-#define Bounce_h
+#ifndef MIDIBounce_h
+#define MIDIBounce_h
 
 #include <inttypes.h>
 
-class Bounce
+class MIDIBounce
 {
 
 public:
 	// Initialize
-  Bounce(uint8_t pin, unsigned long interval_millis ); 
+  MIDIBounce(uint8_t pin, unsigned long interval_millis ); 
 	// Sets the debounce interval
   void interval(unsigned long interval_millis); 
 	// Updates the pin

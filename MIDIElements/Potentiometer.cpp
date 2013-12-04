@@ -42,6 +42,22 @@ void Potentiometer::read(){
 	lastValue=tempRead;
 }
 
+// read
+void Potentiometer::readAvr(){
+	readValues[2]=readValues[1];
+	readValues[1]=readValues[0];
+	tempRead=analogRead(pin);
+	readValues[0]=tempRead;
+	tempRead=(readValues[0]+readValues[1]+readValues[2])/3;
+	tempRead=map(tempRead, 0, 1023, 0, 127);
+	
+	if (tempRead!=lastValue) { //value changed
+      midiCC(tempRead, lastValue);
+    }
+	
+	lastValue=tempRead;
+}
+
 // read value
 int Potentiometer::readValue(bool &changed){
 	tempRead=map(analogRead(pin), 0, 1023, 0, 127);
@@ -89,3 +105,7 @@ void Potentiometer::midiCC(int v, int oldv) {
   }
 }
 //-----------------------------------------------------------------------------------
+
+void Potentiometer::changeSecondary( bool s){
+	secondary=s;
+}

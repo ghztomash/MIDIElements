@@ -9,11 +9,11 @@
 
 //-----------------------------------------------------------------------------------
 #include "WProgram.h" //It is very important to remember this! note that if you are using Arduino 1.0 IDE, change "WProgram.h" to "Arduino.h"
-#include <Bounce.h>
+#include <MIDIBounce.h>
 
 class Button {
 private:
-	Bounce *bButn; // bounce class button
+	MIDIBounce *bButn; // bounce class button
 	bool debugging; // is debugging on
 	bool secondary; // send secondary midi signal
 	byte pin; // pin on teensy
