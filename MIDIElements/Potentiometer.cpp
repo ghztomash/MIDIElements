@@ -25,7 +25,8 @@ Potentiometer::Potentiometer(byte p, byte c, byte n, bool sec, bool debug){ // p
 	number=n;
 	channel=c;
 	secondary=sec;
-	debugging=debug;	
+	debugging=debug;
+	mapped=false;
 }
 
 // destructor
@@ -35,7 +36,14 @@ Potentiometer::~Potentiometer(){
 
 // read
 void Potentiometer::read(){
-	tempRead=map(analogRead(pin), 0, 1023, 0, 127);
+
+	if(mapped){
+			tempRead=constrain(analogRead(pin),inMin,inMax);
+			tempRead=map(tempRead,inMin,inMax,0,127);
+		}
+	else
+		tempRead=map(analogRead(pin), 0, 1023, 0, 127);
+
 	if (tempRead!=lastValue) { //value changed
       midiCC(tempRead, lastValue);
     }
@@ -44,12 +52,18 @@ void Potentiometer::read(){
 
 // read
 void Potentiometer::readAvr(){
-	readValues[2]=readValues[1];
-	readValues[1]=readValues[0];
-	tempRead=analogRead(pin);
-	readValues[0]=tempRead;
-	tempRead=(readValues[0]+readValues[1]+readValues[2])/3;
-	tempRead=map(tempRead, 0, 1023, 0, 127);
+	tempRead=0;
+	for(int i=0; i<10; i++){
+		tempRead+=analogRead(pin);
+	}
+	tempRead=tempRead/10;
+	
+	if(mapped)
+	{
+		tempRead=map(constrain(tempRead,inMin,inMax),inMin,inMax,0,127);
+		}
+	else
+		tempRead=map(tempRead, 0, 1023, 0, 127);
 	
 	if (tempRead!=lastValue) { //value changed
       midiCC(tempRead, lastValue);
@@ -58,9 +72,36 @@ void Potentiometer::readAvr(){
 	lastValue=tempRead;
 }
 
+// enable maped values
+void Potentiometer::bound(int iMin, int iMax){
+	mapped=true;
+	
+	inMin=iMin;
+	inMax=iMax;
+}
+
 // read value
 int Potentiometer::readValue(bool &changed){
 	tempRead=map(analogRead(pin), 0, 1023, 0, 127);
+    changed=tempRead!=lastValue; //value changed
+	lastValue=tempRead;
+	return tempRead;
+}
+
+// read value
+int Potentiometer::readValueAvr(bool &changed){
+	tempRead=0;
+	for(int i=0; i<10; i++){
+		tempRead+=analogRead(pin);
+	}
+	tempRead=tempRead/10;
+	
+	if(mapped)
+	{
+		tempRead=map(constrain(tempRead,inMin,inMax),inMin,inMax,0,127);
+		}
+	else
+		tempRead=map(tempRead, 0, 1023, 0, 127);
     changed=tempRead!=lastValue; //value changed
 	lastValue=tempRead;
 	return tempRead;

@@ -1,5 +1,5 @@
 // MIDI Elements
-// Library to simplifly handling of compontents for MIDI controllers
+// Library to simplify handling of components for MIDI controllers
 // Created by Tomash Ghz
 // www.tomashg.com
 // ghz.tomash@gmail.com
@@ -12,6 +12,8 @@
 #include "Potentiometer.h"
 #include "Led.h"
 #include "RGLed.h"
+#include "RGBLed.h"
+#include "MIDIEncoder.h"
 //-----------------------------------------------------------------------------------
 
 #endif
