@@ -24,6 +24,7 @@ private:
 	int inMin, inMax;
 	int lastValue;
 	int tempRead;
+  int newCC;
 	int readValues[3];
 	byte pin; // pin on teensy
 	byte channel; // midi channel
