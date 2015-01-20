@@ -39,15 +39,24 @@ void Potentiometer::read(){
 
 	if(mapped){
 			tempRead=constrain(analogRead(pin),inMin,inMax);
-			tempRead=map(tempRead,inMin,inMax,0,127);
+
+      /* Need to maintain analog resolution for the next 
+         'if' statement but leaving out the upper and
+         lower limits prevents messages outside the MIDI range*/
+			tempRead=map(tempRead,inMin,inMax,7,1015);
 		}
 	else
-		tempRead=map(analogRead(pin), 0, 1023, 0, 127);
+    tempRead=analogRead(pin);
 
-	if (tempRead!=lastValue) { //value changed
-      midiCC(tempRead, lastValue);
-    }
-	lastValue=tempRead;
+  /*1 - Split the analog signal into blocks of 4
+        and every other block of four is ignored.
+    2 - Reduce the resolution for MIDI and compare
+        against the previously sent message.*/
+  if ((tempRead/4)%2 == 0 && tempRead/8 != lastValue){
+    newCC = tempRead/8;
+    midiCC(newCC, lastValue);
+    lastValue = newCC;
+  }
 }
 
 // read
