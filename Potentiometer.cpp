@@ -51,7 +51,7 @@ void Potentiometer::read(){
 }
 
 // read with relative noise canceling
-void Potentiometer::read_n(){
+void Potentiometer::read_n(int deviation = 8){
 
 	if(mapped){
 			tempRead=constrain(analogRead(pin),inMin,inMax);
@@ -61,7 +61,7 @@ void Potentiometer::read_n(){
 		tempRead=map(analogRead(pin), 0, 1023, 0, 127);
 		tempRead_n=analogRead(pin);
 
-	if (tempRead_n<=(lastValue_n-8) || tempRead_n>=(lastValue_n+8)) { //value changed
+	if (tempRead_n<=(lastValue_n-deviation) || tempRead_n>=(lastValue_n+deviation)) { //value changed
       midiCC(map(tempRead_n, 0, 1023, 0, 127), map(lastValue_n, 0, 1023, 0, 127));
     	lastValue_n=tempRead_n;
     }
