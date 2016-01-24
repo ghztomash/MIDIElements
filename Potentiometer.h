@@ -8,7 +8,14 @@
 #define Potentiometer_H
 
 //-----------------------------------------------------------------------------------
-#include "WProgram.h" //It is very important to remember this! note that if you are using Arduino 1.0 IDE, change "WProgram.h" to "Arduino.h"
+#if defined(ARDUINO) && ARDUINO >= 100
+#include "Arduino.h"
+#elif defined(WIRING)
+#include "Wiring.h"
+#else
+#include "WProgram.h"
+#include "pins_arduino.h"
+#endif
 
 /*! \brief Class for handling faders, knobs or other analog input.
 
@@ -23,7 +30,9 @@ private:
 	bool mapped;
 	int inMin, inMax;
 	int lastValue;
+	int lastValue_n;
 	int tempRead;
+	int tempRead_n;
 	int readValues[3];
 	byte pin; // pin on teensy
 	byte channel; // midi channel
@@ -37,6 +46,7 @@ public:
 	~Potentiometer(); // destructor
 	void read(); //!< read the values and send a midi message if the fader or knob state changed. use in main loop
 	void readAvr(); //!< read the values for couple of iterations for a smoother value and send a midi message if the fader or knob state changed. use in main loop
+	void read_n(int); // !< Read with noise reduction 
 	int readValue(bool &changed); //!<  read and return the analog value, pass state change @param changed will beset to true if the state of the value changed from last time
 	int readValueAvr(bool &changed); //!<  read and return a smooth analog value, pass state change @param changed will beset to true if the state of the value changed from last time
 	void changeSecondary(bool s); //!< enable or disable the secondary super knob cc messages @param s enable super knob
