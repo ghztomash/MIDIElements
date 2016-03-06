@@ -8,7 +8,15 @@
 #define Button_H
 
 //-----------------------------------------------------------------------------------
-#include "WProgram.h" //It is very important to remember this! note that if you are using Arduino 1.0 IDE, change "WProgram.h" to "Arduino.h"
+#if defined(ARDUINO) && ARDUINO >= 100
+#include "Arduino.h"
+#elif defined(WIRING)
+#include "Wiring.h"
+#else
+#include "WProgram.h"
+#include "pins_arduino.h"
+#endif
+
 #include <MIDIBounce.h>
 
 /*! \brief Class for handling push button switches.
