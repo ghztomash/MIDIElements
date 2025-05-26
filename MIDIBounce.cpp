@@ -1,7 +1,15 @@
 
 // Please read MIDIBounce.h for information about the liscence and authors
 
+#if defined(ARDUINO) && ARDUINO >= 100
+#include "Arduino.h"
+#elif defined(WIRING)
+#include "Wiring.h"
+#else
 #include "WProgram.h"
+#include "pins_arduino.h"
+#endif
+
 #include "MIDIBounce.h"
 
 
